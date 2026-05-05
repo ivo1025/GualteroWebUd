@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<title>Registro de Aspirante</title>
+</h:head>
+
+<h:body>
+<div class="contenedor">
+
+	<h1>Registro de Aspirante</h1>
+
+	<h:form>
+
+		<h:messages globalOnly="true" />
+
+		<h:outputLabel for="id_p" value="Identificación:" />
+
+		<h:inputText id="id_p"
+  		  value="#{asp.dto.id_p}"
+   		 required="true"
+  		  requiredMessage="La identificación es obligatoria." />
+
+			<h:message for="id_p" />
+
+		<br /><br />
+
+		<h:outputLabel for="nombres" value="Nombres:" />
+		<h:inputText id="nombres" value="#{asp.dto.nombres}" required="true"
+			requiredMessage="Los nombres son obligatorios.">
+			<f:validateLength minimum="2" />
+		</h:inputText>
+		<h:message for="nombres" />
+
+		<br /><br />
+
+		<h:outputLabel for="apellidos" value="Apellidos:" />
+		<h:inputText id="apellidos" value="#{asp.dto.apellidos}" required="true"
+			requiredMessage="Los apellidos son obligatorios.">
+			<f:validateLength minimum="2" />
+		</h:inputText>
+		<h:message for="apellidos" />
+
+		<br /><br />
+
+		<h:outputLabel for="correo" value="Correo:" />
+		<h:inputText id="correo" value="#{asp.dto.correo}" required="true"
+			requiredMessage="El correo es obligatorio.">
+			<f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" />
+		</h:inputText>
+		<h:message for="correo" />
+
+		<br /><br />
+
+		<h:outputLabel for="telefono" value="Teléfono:" />
+		<h:inputText id="telefono" value="#{asp.dto.telefono}" required="true"
+			requiredMessage="El teléfono es obligatorio.">
+			<f:validateRegex pattern="[0-9]+" />
+		</h:inputText>
+		<h:message for="telefono" />
+
+		<br /><br />
+
+		<h:outputLabel for="pro_aca" value="Programa académico:" />
+		<h:selectOneMenu id="pro_aca" value="#{asp.dto.pro_acad.cod}" required="true"
+			requiredMessage="Debe seleccionar un programa académico.">
+			<f:selectItem itemValue="-1" itemLabel="-- seleccione --" noSelectionOption="true" />
+			<f:selectItems value="#{asp.listaPa}" var="p"
+				itemValue="#{asp.listaPa.indexOf(p)}"
+				itemLabel="#{p.nombre_prog}" />
+		</h:selectOneMenu>
+		<h:message for="pro_aca" />
+	
+		<br /><br />
+
+		<h:commandButton value="Registrar" action="#{asp.registrar}">
+			<f:ajax execute="@form" render="@form" />
+		</h:commandButton>
+
+		<br /><br />
+
+		<h:panelGroup rendered="#{!asp.listaAs.isEmpty()}">
+			<h3>Último registro guardado</h3>
+			<p>El aspirante fue registrado correctamente.</p>
+		</h:panelGroup>
+
+	</h:form>
+
+</div>
+
+	<footer>
+		<a href="index.xhtml">Inicio</a>
+		<br /><br />
+		<h4>Ivonne Alejandra Gualtero Arana - Programación Avanzada - 578-302 - Universidad Distrital Francisco Jose de Caldas - 2026</h4>
+	</footer>
+
+</h:body>
+</html>
