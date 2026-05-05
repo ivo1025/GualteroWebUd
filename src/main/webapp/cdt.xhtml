@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Calculo de CDT</title>
+    <h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+<h:body>
+<div class="contenedor">
+
+    <h1>Calculadora CDT</h1>
+
+    <h:form>
+
+        <h:outputLabel for="inversion" value="Valor a invertir:" />
+        <h:inputText id="inversion"
+                     value="#{cdt.dto.inversion}"
+                     required="true"
+                     requiredMessage="Ingrese que desea invertir">
+            <f:convertNumber maxFractionDigits="2" />
+            <f:validateDoubleRange minimum="1" />
+
+        </h:inputText>
+
+        <h:message for="inversion" />
+        <br /><br />
+
+        <h:outputLabel for="interes" value="Tasa de interes que se manejara (%): " />
+        <h:inputText id="interes"
+                     value="#{cdt.dto.interes}"
+                     required="true"
+                     requiredMessage="Ingrese el porcentaje de interes">
+
+            <f:validateDoubleRange minimum="0.1" />
+
+        </h:inputText>
+
+        <h:message for="interes" />
+        <br /><br />
+
+        <h:outputLabel for="plazo" value="Plazo en dias: " />
+        <h:inputText id="plazo"
+                     value="#{cdt.dto.plazo}"
+                     required="true"
+                     requiredMessage="Ingrese el plazo en dias">
+
+            <f:validateDoubleRange minimum="2" />
+
+        </h:inputText>
+
+        <h:message for="plazo" />
+        <br /><br />
+
+        <h:commandButton value="Calcular Ganancia"
+                         action="#{cdt.calcular}">
+
+            <f:ajax execute="@form" render="@form" />
+
+        </h:commandButton>
+
+        <br /><br />
+
+        <h:panelGroup rendered="#{cdt.dto.ganancia > 0}">
+
+            <h3>Resultados</h3>
+
+            <h:outputText value="Ganancia generada: " />
+
+            <h:outputText value="#{cdt.dto.ganancia}">
+                <f:convertNumber type="currency"
+                                 currencySymbol="$"
+                                 maxFractionDigits="2"
+                                 groupingUsed="true" />
+            </h:outputText>
+
+            <br /><br />
+
+            <h:outputText value="Dinero retenido por parte del  impuesto (4%): " />
+
+            <h:outputText value="#{cdt.dto.impuesto}">
+                <f:convertNumber type="currency"
+                                 currencySymbol="$"
+                                 maxFractionDigits="2"
+                                 groupingUsed="true" />
+            </h:outputText>
+
+            <br /><br />
+
+            <h:outputText value="Ganancia neta (ganancia generada - impuesto): " />
+
+            <h:outputText value="#{cdt.dto.ganancia - cdt.dto.impuesto}">
+                <f:convertNumber type="currency"
+                                 currencySymbol="$"
+                                 maxFractionDigits="2"
+                                 groupingUsed="true" />
+            </h:outputText>
+
+            <br /><br />
+
+            <h:outputText value="Valor total del CDT (ganancia neta + valor invertido): " />
+
+            <h:outputText value="#{cdt.dto.valorFuturo - cdt.dto.impuesto}">
+                <f:convertNumber type="currency"
+                                 currencySymbol="$"
+                                 maxFractionDigits="2"
+                                 groupingUsed="true" />
+            </h:outputText>
+
+        </h:panelGroup>
+
+    </h:form>
+    </div>
+
+<footer>
+
+    <a href="index.xhtml">Pagina principal</a>
+
+
+    <br /><br />
+
+    <h4>
+        Ivonne Alejandra Gualtero Arana - Programación Avanzada - 578-301 -
+        Universidad Distrital Francisco José de Caldas - 2026
+    </h4>
+
+</footer>
+
+</h:body>
+</html>
